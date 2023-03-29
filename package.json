@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
     "start": "node --loader ts-node/esm ./src/app.ts",
+    "dev": "nodemon",
     "setup": "node --loader ts-node/esm ./src/setup/setup.ts",
     "lint": "eslint ./src"
   },
@@ -13,7 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/cors": "^2.8.13",
     "@types/pg": "^8.6.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-validator": "^6.15.0",
