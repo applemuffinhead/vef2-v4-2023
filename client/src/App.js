@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { generateApiUrl } from './utils/generateApiUrl.js';
-
+import React, { useEffect, useState } from "react";
+import { generateApiUrl } from "./utils/generateApiUrl.js";
 
 function App() {
   const [departments, setDepartments] = useState([]);
   const [newDepartment, setNewDepartment] = useState({
-    title: '',
-    description: '',
+    title: "",
+    description: "",
   });
-  console.log(process.env);
+
   async function fetchDepartments() {
     try {
-      const url = generateApiUrl('/departments');
+      const url = generateApiUrl("/departments");
       const response = await fetch(url);
       const data = await response.json();
-      console.log('All Departments:', data); 
+      console.log("All Departments:", data);
       setDepartments(data);
     } catch (error) {
-      console.error('Error fetching departments:', error);
+      console.error("Error fetching departments:", error);
     }
   }
 
@@ -28,25 +27,33 @@ function App() {
   async function handleNewDepartment(e) {
     e.preventDefault();
     try {
-      const response = await fetch(generateApiUrl('/departments', {
-        method: 'POST',
+      const apiUrl = generateApiUrl("/departments");
+      const requestOptions = {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           title: newDepartment.title,
           description: newDepartment.description,
         }),
-      }));
-  
+      };
+
+      console.log("API Request Info:", {
+        url: apiUrl,
+        requestOptions,
+      });
+
+      const response = await fetch(apiUrl, requestOptions);
+
       const data = await response.json();
+      console.log("New department:", data);
       setDepartments([...departments, data]);
-      setNewDepartment({ title: '', description: '' });
+      setNewDepartment({ title: "", description: "" });
     } catch (error) {
-      console.error('Error creating new department:', error);
+      console.error("Error creating new department:", error);
     }
   }
-  
 
   return (
     <div className="App">

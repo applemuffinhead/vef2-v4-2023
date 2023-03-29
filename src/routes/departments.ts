@@ -5,7 +5,7 @@ import {
   deleteDepartmentBySlug,
   getDepartmentBySlug,
   getDepartments,
-  insertDepartment,
+  insertDepartment
 } from '../lib/db.js';
 import { departmentMapper } from '../lib/mappers.js';
 import {
@@ -14,7 +14,7 @@ import {
   genericSanitizer,
   stringValidator,
   validationCheck,
-  xssSanitizer,
+  xssSanitizer
 } from '../lib/validation.js';
 import { Department } from '../types.js';
 
