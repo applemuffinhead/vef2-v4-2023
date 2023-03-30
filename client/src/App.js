@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Courses from "./components/Courses";
-import MainPage from "./components/Departments";
+import Departments from "./components/Departments";
+import Layout from "./components/Layout";
 
 function App() {
   const [selectedDepartmentSlug, setSelectedDepartmentSlug] = useState(null);
@@ -10,16 +11,16 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <Layout>
       {selectedDepartmentSlug ? (
         <Courses
           departmentSlug={selectedDepartmentSlug}
           onBack={() => setSelectedDepartmentSlug(null)}
         />
       ) : (
-        <MainPage onDepartmentClick={handleDepartmentClick} />
+        <Departments onDepartmentClick={handleDepartmentClick} />
       )}
-    </div>
+    </Layout>
   );
 }
 

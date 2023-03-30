@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { generateApiUrl } from "../utils/generateApiUrl.js";
+import Button from "./Button";
+import Form from "./Form";
+import Layout from "./Layout.js";
 
 function Courses({ departmentSlug, onBack }) {
   const [courses, setCourses] = useState([]);
-
+  const [showDeleteButtons, setShowDeleteButtons] = useState(false);
   const fetchCourses = useCallback(async () => {
     try {
       const url = generateApiUrl(`/departments/${departmentSlug}/courses`);
@@ -19,6 +22,37 @@ function Courses({ departmentSlug, onBack }) {
   useEffect(() => {
     fetchCourses();
   }, [fetchCourses]);
+
+  const handleDeleteCourse = async (courseId) => {
+    try {
+      const apiUrl = generateApiUrl(
+        `/departments/${departmentSlug}/courses/${courseId}`
+      );
+      const requestOptions = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await fetch(apiUrl, requestOptions);
+
+      if (response.ok) {
+        console.log("Course deleted:", courseId);
+        setCourses(courses.filter((course) => course.courseId !== courseId));
+      } else {
+        const data = await response.json();
+        console.error("Error deleting course:", data.errors);
+        alert(
+          "Error deleting course: " +
+            data.errors.map((error) => error.msg).join(", ")
+        );
+      }
+    } catch (error) {
+      console.error("Error deleting course:", error);
+      alert("Error deleting course: " + error.message);
+    }
+  };
 
   const handleNewCourse = async (e) => {
     e.preventDefault();
@@ -43,8 +77,8 @@ function Courses({ departmentSlug, onBack }) {
 
       if (response.ok) {
         console.log("New course:", data);
-        setCourses([...courses, data]);
         e.target.reset();
+        fetchCourses(); // Refetch courses after adding a new course
       } else {
         console.error("Error creating new course:", data.errors);
         alert(
@@ -58,8 +92,12 @@ function Courses({ departmentSlug, onBack }) {
     }
   };
 
+  const toggleDeleteButtons = () => {
+    setShowDeleteButtons(!showDeleteButtons);
+  };
+
   return (
-    <div className="App">
+    <Layout className="App">
       <h1>Courses</h1>
       <ul>
         {courses
@@ -68,11 +106,16 @@ function Courses({ departmentSlug, onBack }) {
             <li key={course.id}>
               {course.courseId} - {course.title}
               {course.description && ` - ${course.description}`}
+              {showDeleteButtons && (
+                <Button onClick={() => handleDeleteCourse(course.courseId)}>
+                  Delete
+                </Button>
+              )}
             </li>
           ))}
       </ul>
 
-      <form onSubmit={handleNewCourse}>
+      <Form onSubmit={handleNewCourse}>
         <input type="text" name="courseId" placeholder="Course ID" />
         <input type="text" name="title" placeholder="Course Title" required />
         <input
@@ -89,11 +132,11 @@ function Courses({ departmentSlug, onBack }) {
           <option value="Haust">Haust</option>
           <option value="Heilsárs">Heilsárs</option>
         </select>
-        <button type="submit">Add Course</button>
-      </form>
-
-      <button onClick={onBack}>Back</button>
-    </div>
+        <Button type="submit">Add Course</Button>
+      </Form>
+      <Button onClick={toggleDeleteButtons}>Toggle Delete</Button>
+      <Button onClick={onBack}>Back</Button>
+    </Layout>
   );
 }
 

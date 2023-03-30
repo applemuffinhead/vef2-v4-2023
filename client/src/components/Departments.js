@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { generateApiUrl } from "../utils/generateApiUrl.js";
+import Button from "./Button.js";
 import Department from "./Department";
+import Form from "./Form.js";
+import Layout from "./Layout.js";
 
 function Departments() {
   const [departments, setDepartments] = useState([]);
@@ -73,7 +76,7 @@ function Departments() {
   };
 
   return (
-    <div className="App">
+    <Layout className="App">
       <h1>Departments</h1>
       {currentDepartment ? (
         <Department
@@ -86,14 +89,14 @@ function Departments() {
           <ul>
             {departments.map((department) => (
               <li key={department.id}>
-                <button onClick={() => handleDepartmentClick(department)}>
+                <Button onClick={() => handleDepartmentClick(department)}>
                   {department.title}
-                </button>{" "}
+                </Button>{" "}
                 - {department.description}
               </li>
             ))}
           </ul>
-          <form onSubmit={handleNewDepartment}>
+          <Form onSubmit={handleNewDepartment}>
             <input
               type="text"
               value={newDepartment.title}
@@ -113,11 +116,11 @@ function Departments() {
               }
               placeholder="New department description"
             />
-            <button type="submit">Add Department</button>
-          </form>
+            <Button type="submit">Add Department</Button>
+          </Form>
         </>
       )}
-    </div>
+    </Layout>
   );
 }
 
