@@ -104,7 +104,8 @@ function Courses({ departmentSlug, onBack }) {
           .filter((course) => course !== null)
           .map((course) => (
             <li key={course.id}>
-              {course.courseId} - {course.title}
+              {course.courseId} - {course.title} - {course.units} units -{" "}
+              {course.semester}
               {course.description && ` - ${course.description}`}
               {showDeleteButtons && (
                 <Button onClick={() => handleDeleteCourse(course.courseId)}>
