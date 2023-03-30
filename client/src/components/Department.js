@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { generateApiUrl } from "../utils/generateApiUrl.js";
+import Courses from "./Courses";
 
-function Department({ department, setCurrentDepartment }) {
+function Department({ department, setCurrentDepartment, onDelete }) {
+  const [showCourses, setShowCourses] = useState(false);
+
   const deleteDepartment = async () => {
     try {
       const response = await fetch(
@@ -13,7 +16,7 @@ function Department({ department, setCurrentDepartment }) {
 
       if (response.ok) {
         alert("Department deleted successfully.");
-        setCurrentDepartment(null);
+        onDelete(department.slug);
       } else {
         alert("Error deleting department.");
       }
@@ -22,12 +25,27 @@ function Department({ department, setCurrentDepartment }) {
     }
   };
 
+  const handleShowCourses = () => {
+    setShowCourses(true);
+  };
+
+  const handleHideCourses = () => {
+    setShowCourses(false);
+  };
+
   return (
     <div>
-      <h1>{department.title}</h1>
-      <p>{department.description}</p>
-      <button onClick={deleteDepartment}>Delete Department</button>
-      <button onClick={() => setCurrentDepartment(null)}>Go Back</button>
+      {showCourses ? (
+        <Courses departmentSlug={department.slug} onBack={handleHideCourses} />
+      ) : (
+        <>
+          <h1>{department.title}</h1>
+          <p>{department.description}</p>
+          <button onClick={handleShowCourses}>Show Courses</button>
+          <button onClick={deleteDepartment}>Delete Department</button>
+          <button onClick={() => setCurrentDepartment(null)}>Go Back</button>
+        </>
+      )}
     </div>
   );
 }

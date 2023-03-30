@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Courses from "./components/Courses";
-import MainPage from "./components/MainPage";
+import MainPage from "./components/Departments";
 
 function App() {
   const [selectedDepartmentSlug, setSelectedDepartmentSlug] = useState(null);
