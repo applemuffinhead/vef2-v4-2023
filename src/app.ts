@@ -12,10 +12,10 @@ app.use(express.json());
 app.use(cors);
 app.use(router);
 
-const port = process.env.PORT || 4000;
+const port = "https://vef2-v4-2023-production.up.railway.app/"
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+  console.log(`Server running at ${port}`);
 });
 
 app.use((req: Request, res: Response) => {
