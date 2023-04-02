@@ -4,3 +4,6 @@ buildCommand = "npm run build"
 
 [deploy]
 startCommand = "npm run start-railway"
+
+[setup]
+command = "createdb -U postgres vef2-v4-2023
