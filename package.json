@@ -7,13 +7,7 @@
     "start": "node --loader ts-node/esm ./src/app.ts",
     "dev": "nodemon",
     "setup": "node --loader ts-node/esm ./src/setup/setup.ts",
-    "lint": "eslint ./src",
-    "start-backend": "node --loader ts-node/esm ./src/app.ts",
-    "start-frontend": "cd client && npm start",
-    "start-both": "run-p start-backend start-frontend",
-    "build-backend": "npm install && npm run setup",
-    "build-frontend": "cd client && npm install && npm run build",
-    "build-both": "run-s build-backend build-frontend"
+    "lint": "eslint ./src"
   },
   "keywords": [],
   "author": "",
