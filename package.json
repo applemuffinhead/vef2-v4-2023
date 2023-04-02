@@ -7,7 +7,9 @@
     "start": "node --loader ts-node/esm ./src/app.ts",
     "dev": "nodemon",
     "setup": "node --loader ts-node/esm ./src/setup/setup.ts",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "build": "npm install && npm run setup && cd client",
+    "start-railway": "npm start && npm run dev"
   },
   "keywords": [],
   "author": "",
