@@ -1,0 +1,74 @@
+.linkButton {
+  text-decoration: none;
+  background-color: #3498db;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.linkButton:hover {
+  background-color: #2980b9;
+}
+
+.sharedButton {
+  text-decoration: none;
+  background-color: #2a8aca;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.2s ease-in-out;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: center;
+  vertical-align: middle;
+  border: 2px solid #2c3e50;
+  outline: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.sharedButton:hover {
+  background-color: #2980b9;
+}
+
+.sharedButton:hover {
+  background-color: #2980b9;
+}
+
+.backButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.deleteBtn {
+  background-color: rgb(205, 53, 53);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.2s ease-in-out;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: center;
+  vertical-align: middle;
+  border: 2px solid #2c3e50;
+  outline: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.deleteBtn:hover {
+  background-color: rgb(151, 32, 32);
+}

@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles/Button.css";
+import "../styles/Courses.css";
+import "../styles/Form.css";
 import { generateApiUrl } from "../utils/generateApiUrl.js";
-import Button from "./Button";
-import Form from "./Form";
+import Button from "./Button.js";
+import Form from "./Form.js";
 import Layout from "./Layout.js";
 
 function Courses({ departmentSlug, onBack }) {
@@ -68,6 +72,10 @@ function Courses({ departmentSlug, onBack }) {
           title: e.target.elements.title.value,
           units: parseFloat(e.target.elements.units.value) || 0.5,
           semester: e.target.elements.semester.value || "Vor",
+          level: e.target.elements.level.value || null,
+          url:
+            e.target.elements.url.value.trim().replace(/^https?:\/\//, "") ||
+            null,
         }),
       };
 
@@ -98,45 +106,87 @@ function Courses({ departmentSlug, onBack }) {
 
   return (
     <Layout className="App">
-      <h1>Courses</h1>
-      <ul>
-        {courses
-          .filter((course) => course !== null)
-          .map((course) => (
-            <li key={course.id}>
-              {course.courseId} - {course.title} - {course.units} units -{" "}
-              {course.semester}
-              {course.description && ` - ${course.description}`}
-              {showDeleteButtons && (
-                <Button onClick={() => handleDeleteCourse(course.courseId)}>
-                  Delete
-                </Button>
-              )}
-            </li>
-          ))}
-      </ul>
-
-      <Form onSubmit={handleNewCourse}>
-        <input type="text" name="courseId" placeholder="Course ID" />
-        <input type="text" name="title" placeholder="Course Title" required />
-        <input
-          type="number"
-          name="units"
-          placeholder="Units"
-          step="0.5"
-          min="0.5"
-          max="100"
-        />
-        <select name="semester" defaultValue="Vor">
-          <option value="Vor">Vor</option>
-          <option value="Sumar">Sumar</option>
-          <option value="Haust">Haust</option>
-          <option value="Heilsárs">Heilsárs</option>
-        </select>
-        <Button type="submit">Add Course</Button>
-      </Form>
-      <Button onClick={toggleDeleteButtons}>Toggle Delete</Button>
-      <Button onClick={onBack}>Back</Button>
+      <div className="layout-container">
+        <h1 className="coursesTitle">Áfangar</h1>
+        <div className="course-list-container">
+          <ul className="course-list">
+            {courses
+              .filter((course) => course !== null)
+              .map((course) => (
+                <li key={course.id} className="course-item">
+                  <div className="course-title">{course.title}</div>
+                  <div className="course-code">{course.courseId}</div>
+                  <div className="course-details">
+                    <div className="course-units">{course.units} units</div>
+                    <div className="course-semester">{course.semester}</div>
+                    <div className="course-level">{course.level}</div>
+                    <div className="course-url">
+                      {course.url && (
+                        <a href={course.url} target="_blank" rel="noreferrer">
+                          Website
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  {showDeleteButtons && (
+                    <Button
+                      onClick={() => handleDeleteCourse(course.courseId)}
+                      className="deleteBtn"
+                    >
+                      Delete
+                    </Button>
+                  )}
+                </li>
+              ))}
+          </ul>
+        </div>
+        <div className="form-wrapper">
+          <Form onSubmit={handleNewCourse}>
+            <div className="form-row">
+              <input type="text" name="courseId" placeholder="Númer" />
+              <input type="text" name="title" placeholder="Heiti" required />
+              <input
+                type="number"
+                name="units"
+                placeholder="Einingar"
+                step="0.5"
+                min="0.5"
+                max="100"
+                className="course-input"
+              />
+              <select
+                name="semester"
+                defaultValue="Vor"
+                className="course-input"
+              >
+                <option value="" disabled selected hidden>
+                  Kennslumisseri
+                </option>
+                <option value="Vor">Vor</option>
+                <option value="Sumar">Sumar</option>
+                <option value="Haust">Haust</option>
+                <option value="Heilsárs">Heilsárs</option>
+              </select>
+              <input type="text" name="level" placeholder="Stig" />
+              <input
+                type="text"
+                name="url"
+                placeholder="Hlekkur"
+                className="url-input-courses"
+              />
+            </div>
+            <Button className="sharedButton" type="submit">
+              Bæta við áfanga
+            </Button>
+          </Form>
+        </div>
+        <Button onClick={toggleDeleteButtons} className="sharedButton">
+          Toggle Delete
+        </Button>
+        <Link to="/" className="sharedButton backButton">
+          Til baka
+        </Link>
+      </div>
     </Layout>
   );
 }

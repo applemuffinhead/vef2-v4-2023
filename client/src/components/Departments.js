@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles/Button.css";
+import "../styles/Departments.css";
+import "../styles/Form.css";
 import { generateApiUrl } from "../utils/generateApiUrl.js";
-import Button from "./Button.js";
+import Button from "./Button";
 import Department from "./Department";
 import Form from "./Form.js";
 import Layout from "./Layout.js";
@@ -28,10 +32,6 @@ function Departments() {
   useEffect(() => {
     fetchDepartments();
   }, []);
-
-  const handleDepartmentClick = (department) => {
-    setCurrentDepartment(department);
-  };
 
   async function handleNewDepartment(e) {
     e.preventDefault();
@@ -77,49 +77,58 @@ function Departments() {
 
   return (
     <Layout className="App">
-      <h1>Departments</h1>
-      {currentDepartment ? (
-        <Department
-          department={currentDepartment}
-          setCurrentDepartment={setCurrentDepartment}
-          onDelete={handleDepartmentDelete}
-        />
-      ) : (
-        <>
-          <ul>
-            {departments.map((department) => (
-              <li key={department.id}>
-                <Button onClick={() => handleDepartmentClick(department)}>
-                  {department.title}
-                </Button>{" "}
-                - {department.description}
-              </li>
-            ))}
-          </ul>
-          <Form onSubmit={handleNewDepartment}>
-            <input
-              type="text"
-              value={newDepartment.title}
-              onChange={(e) =>
-                setNewDepartment({ ...newDepartment, title: e.target.value })
-              }
-              placeholder="New department name"
-            />
-            <input
-              type="text"
-              value={newDepartment.description}
-              onChange={(e) =>
-                setNewDepartment({
-                  ...newDepartment,
-                  description: e.target.value,
-                })
-              }
-              placeholder="New department description"
-            />
-            <Button type="submit">Add Department</Button>
-          </Form>
-        </>
-      )}
+      <div className="layout-container">
+        <h1 className="h1-title">Deildir</h1>
+        {currentDepartment ? (
+          <Department
+            department={currentDepartment}
+            setCurrentDepartment={setCurrentDepartment}
+            onDelete={handleDepartmentDelete}
+          />
+        ) : (
+          <>
+            <ul className="departmentsList">
+              {departments.map((department) => (
+                <li key={department.id} className="departmentItem">
+                  {" "}
+                  <Link
+                    className="sharedButton"
+                    to={`/departments/${department.slug}`}
+                  >
+                    {department.title}
+                  </Link>{" "}
+                  - {department.description}
+                </li>
+              ))}
+            </ul>
+
+            <Form onSubmit={handleNewDepartment}>
+              <input
+                type="text"
+                value={newDepartment.title}
+                onChange={(e) =>
+                  setNewDepartment({ ...newDepartment, title: e.target.value })
+                }
+                placeholder="Nafn á nýrri deild"
+              />
+              <input
+                type="text"
+                value={newDepartment.description}
+                onChange={(e) =>
+                  setNewDepartment({
+                    ...newDepartment,
+                    description: e.target.value,
+                  })
+                }
+                placeholder="Lýsing á nýrri deild"
+              />
+              <Button className="sharedButton" type="submit">
+                Bæta við deild
+              </Button>
+            </Form>
+          </>
+        )}
+      </div>
     </Layout>
   );
 }

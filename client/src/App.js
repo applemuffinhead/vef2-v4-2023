@@ -1,26 +1,25 @@
-import React, { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Courses from "./components/Courses";
+import Department from "./components/Department";
 import Departments from "./components/Departments";
 import Layout from "./components/Layout";
 
 function App() {
-  const [selectedDepartmentSlug, setSelectedDepartmentSlug] = useState(null);
-
-  const handleDepartmentClick = (slug) => {
-    setSelectedDepartmentSlug(slug);
-  };
-
   return (
-    <Layout>
-      {selectedDepartmentSlug ? (
-        <Courses
-          departmentSlug={selectedDepartmentSlug}
-          onBack={() => setSelectedDepartmentSlug(null)}
-        />
-      ) : (
-        <Departments onDepartmentClick={handleDepartmentClick} />
-      )}
-    </Layout>
+    <div className="App">
+      <Layout>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/departments/:departmentSlug"
+              element={<Department />}
+            />
+            <Route path="/" element={<Departments />} />
+            <Route path="/departments/:slug/courses" element={<Courses />} />
+          </Routes>
+        </BrowserRouter>
+      </Layout>
+    </div>
   );
 }
 

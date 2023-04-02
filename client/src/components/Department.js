@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import "../styles/Department.css";
 import { generateApiUrl } from "../utils/generateApiUrl.js";
-import Button from "./Button.js";
 import Courses from "./Courses";
 import Layout from "./Layout.js";
 
-function Department({ department, setCurrentDepartment, onDelete }) {
+function Department() {
+  const [department, setDepartment] = useState(null);
   const [showCourses, setShowCourses] = useState(false);
+  const { departmentSlug } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchDepartment() {
+      try {
+        const response = await fetch(
+          generateApiUrl(`/departments/${departmentSlug}`)
+        );
+        const data = await response.json();
+        setDepartment(data);
+      } catch (error) {
+        console.error("Error fetching department:", error);
+      }
+    }
+
+    fetchDepartment();
+  }, [departmentSlug]);
 
   const deleteDepartment = async () => {
     try {
@@ -18,7 +38,7 @@ function Department({ department, setCurrentDepartment, onDelete }) {
 
       if (response.ok) {
         alert("Department deleted successfully.");
-        onDelete(department.slug);
+        navigate("/");
       } else {
         alert("Error deleting department.");
       }
@@ -35,19 +55,38 @@ function Department({ department, setCurrentDepartment, onDelete }) {
     setShowCourses(false);
   };
 
+  if (!department) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Layout>
-      {showCourses ? (
-        <Courses departmentSlug={department.slug} onBack={handleHideCourses} />
-      ) : (
-        <>
-          <h1>{department.title}</h1>
-          <p>{department.description}</p>
-          <Button onClick={handleShowCourses}>Show Courses</Button>
-          <Button onClick={deleteDepartment}>Delete Department</Button>
-          <Button onClick={() => setCurrentDepartment(null)}>Go Back</Button>
-        </>
-      )}
+      <div className="layout-container">
+        {showCourses ? (
+          <Courses
+            departmentSlug={department.slug}
+            onBack={handleHideCourses}
+          />
+        ) : (
+          <div className="department-container">
+            <div className="department-details">
+              <h1 className="department-title">{department.title}</h1>
+              <p className="department-description">{department.description}</p>
+            </div>
+            <div className="department-buttons">
+              <button onClick={handleShowCourses} className="sharedButton">
+                Show Courses
+              </button>
+              <button onClick={deleteDepartment} className="sharedButton">
+                Delete Department
+              </button>
+              <Link to="/" className="sharedButton backButton">
+                Til baka
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </Layout>
   );
 }

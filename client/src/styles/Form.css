@@ -1,0 +1,50 @@
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form .form-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+input[type="text"],
+textarea,
+input[type="number"],
+input[type="url"],
+select {
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  width: 300px;
+  font-size: 16px;
+}
+
+.newDepButton {
+  text-decoration: none;
+  background-color: #3498db;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.newDepButton:hover,
+.submitCourseBtn:hover {
+  background-color: #2980b9;
+}
