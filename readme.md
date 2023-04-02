@@ -1,12 +1,12 @@
-# Vefforritun 2, 2023, verkefni 3 sýnilausn
+# Vefforritun 2, 2023, verkefni 4
 
-Sýnilausn á verkefni 3.
+### Þetta verkefni var unnið af Hrefnu Karen Valgarðsdóttur - hkv5@hi.is
 
 ```bash
-createdb vef2-2023-v3
+createdb vef2-v4-2023
 npm install
 npm run setup
-npm run dev # eða "npm start"
+npm run dev # og "npm start"
 ```
 
 Hægt að prófa request með því að importa `v3.postman.json` inn í Postman.
