@@ -1,0 +1,10 @@
+version: "1.0"
+name: vef2-v4-2023
+env:
+  - NODE_ENV=production
+  - PORT=3000
+build:
+  frontend-backend:
+    command: npm run build-both
+start:
+  command: npm run start-both
