@@ -1,11 +1,15 @@
 import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
+import path from 'path';
 import { cors } from './lib/cors.js';
 import { router } from './routes/api.js';
+
 
 dotenv.config();
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use(express.json());
 
@@ -16,6 +20,10 @@ const port = process.env.PORT || 4000;
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
+});
+
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 app.use((req: Request, res: Response) => {

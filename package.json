@@ -9,9 +9,7 @@
     "setup": "node --loader ts-node/esm ./src/setup/setup.ts",
     "lint": "eslint ./src",
     "build-frontend": "cd client && npm install && npm run build",
-    "postinstall": "npm run build-frontend",
-    "build": "npm run setup && npm run build-frontend",
-    "start-production": "NODE_ENV=production node --loader ts-node/esm ./src/app.ts"
+    "postinstall": "npm run build-frontend"
   },
   "keywords": [],
   "author": "",
