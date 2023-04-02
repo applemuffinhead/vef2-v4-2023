@@ -75,10 +75,10 @@ function Department() {
             </div>
             <div className="department-buttons">
               <button onClick={handleShowCourses} className="sharedButton">
-                Show Courses
+                Sýna Áfanga
               </button>
               <button onClick={deleteDepartment} className="sharedButton">
-                Delete Department
+                Eyða deild
               </button>
               <Link to="/" className="sharedButton backButton">
                 Til baka

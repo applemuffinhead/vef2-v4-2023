@@ -86,7 +86,7 @@ function Courses({ departmentSlug, onBack }) {
       if (response.ok) {
         console.log("New course:", data);
         e.target.reset();
-        fetchCourses(); // Refetch courses after adding a new course
+        fetchCourses();
       } else {
         console.error("Error creating new course:", data.errors);
         alert(
@@ -181,7 +181,7 @@ function Courses({ departmentSlug, onBack }) {
           </Form>
         </div>
         <Button onClick={toggleDeleteButtons} className="sharedButton">
-          Toggle Delete
+          Eyða áfanga
         </Button>
         <Link to="/" className="sharedButton backButton">
           Til baka
